@@ -212,8 +212,8 @@ const DATE_STAGE_LABEL: Record<string, string> = {
   '2026-07-19':'Final',
 };
 
-const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
-const TODAY_ISO = new Date().toLocaleDateString('en-CA', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => etToLocalDate(f.timeET, f.date)))).sort();
+const TODAY_ISO = new Date().toLocaleDateString('en-CA');
 
 function formatDateBtn(iso: string): { top: string; bottom: string } {
   const d = new Date(iso + 'T12:00:00');
