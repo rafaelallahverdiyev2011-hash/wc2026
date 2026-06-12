@@ -16,7 +16,7 @@ function etToLocal(timeET: string, date: string): string {
   const ampm = match[3].toUpperCase();
   if (ampm === 'PM' && hours !== 12) hours += 12;
   if (ampm === 'AM' && hours === 12) hours = 0;
-  const utcHours = hours + 4;
+  const utcHours = hours + 5;
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
