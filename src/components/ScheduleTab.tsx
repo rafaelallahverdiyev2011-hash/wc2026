@@ -16,7 +16,7 @@ function etToLocal(timeET: string, date: string): string {
   const ampm = match[3].toUpperCase();
   if (ampm === 'PM' && hours !== 12) hours += 12;
   if (ampm === 'AM' && hours === 12) hours = 0;
-  const utcHours = hours + 5;
+  const utcHours = hours + 4;;
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
@@ -200,7 +200,7 @@ const DATE_STAGE_LABEL: Record<string, string> = {
 };
 
 const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
-const TODAY_ISO = new Date().toLocaleDateString('en-CA');
+const TODAY_ISO = new Date().toLocaleDateString('en-CA', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
 
 function formatDateBtn(iso: string): { top: string; bottom: string } {
   const d = new Date(iso + 'T12:00:00');
