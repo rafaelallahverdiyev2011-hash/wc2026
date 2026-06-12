@@ -919,9 +919,9 @@ export function normaliseStage(stage: string | null | undefined): string {
   return String(stage);
 }
 export function formatKickoff(utcDate: string): string {
-  return new Date(utcDate).toLocaleTimeString('en-US', {
-    hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York',
-  }) + ' ET';
+ return new Date(utcDate).toLocaleTimeString(undefined, {
+    hour: 'numeric', minute: '2-digit',
+  });
 }
 
 export function parseGroupLetter(group: string | null | undefined): string {
