@@ -188,21 +188,19 @@ const DATE_STAGE_LABEL: Record<string, string> = {
 };
 
 const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
-const TODAY_ISO = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
+const TODAY_ISO = new Date().toLocaleDateString('en-CA');
 
 function formatDateBtn(iso: string): { top: string; bottom: string } {
   const d = new Date(iso + 'T12:00:00');
   return {
-    top:    d.toLocaleDateString('en-US', { month: 'short', timeZone: 'America/New_York' }),
-    bottom: d.toLocaleDateString('en-US', { day: 'numeric', timeZone: 'America/New_York' }),
+   top:    d.toLocaleDateString('en-US', { month: 'short' }),
+bottom: d.toLocaleDateString('en-US', { day: 'numeric' }),
   };
 }
 
 function formatMatchDate(iso: string): string {
   return new Date(iso + 'T12:00:00').toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-    timeZone: 'America/New_York',
-  });
+ month: 'long', day: 'numeric', year: 'numeric',
 }
 
 function daysUntil(iso: string): number {
