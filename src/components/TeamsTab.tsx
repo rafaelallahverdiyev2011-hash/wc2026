@@ -110,13 +110,13 @@ function getTeamStatus(teamName: string, liveMatches: FDMatch[], allMatches: FDM
     return { type: 'today', kickoff: new Date(todayMatch.utcDate).toLocaleTimeString('en', { hour: '2-digit', minute: '2-digit' }) };
   }
   const inKnockout = allMatches.some((m) => {
-    const stage = (m.stage ?? '').toUpperCase();
+   const stage = String(m.stage ?? '').toUpperCase();
     return (fuzzyMatch(teamName, m.homeTeam.name) || fuzzyMatch(teamName, m.awayTeam.name)) &&
       (stage.includes('LAST') || stage.includes('QUARTER') || stage.includes('SEMI') || stage === 'FINAL');
   });
   if (inKnockout) return { type: 'advanced' };
   const groupDone = allMatches.filter(
-    (m) => isFinishedStatus(m.status) && (m.stage ?? '').toUpperCase().includes('GROUP') &&
+   (m) => isFinishedStatus(m.status) && String(m.stage ?? '').toUpperCase().includes('GROUP') &&
       (fuzzyMatch(teamName, m.homeTeam.name) || fuzzyMatch(teamName, m.awayTeam.name))
   );
   if (groupDone.length >= 3) return { type: 'eliminated' };
