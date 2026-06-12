@@ -2,13 +2,6 @@
 // Dev: Vite proxy /rapidapi/* → API host
 // Prod: Supabase Edge Function at football-proxy
 
-const HARDCODED_RESULTS: Record<string, { home: number; away: number }> = {
-  "Mexico_South Africa": { home: 2, away: 0 },
-  "South Africa_Mexico": { home: 0, away: 2 },
-  "South Korea_Czechia": { home: 2, away: 1 },
-  "Czechia_South Korea": { home: 1, away: 2 },
-};
-
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 
