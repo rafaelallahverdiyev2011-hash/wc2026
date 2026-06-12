@@ -642,7 +642,7 @@ const sm = map.get(String(f.stage ?? ''))!;
                   className="font-anton text-white tracking-[0.2em] uppercase leading-none"
                   style={{ fontSize: 'clamp(18px, 3vw, 32px)' }}
                 >
-                  {isFinal ? 'FINAL · July 19, 2026' : stage.toUpperCase()}
+                 {isFinal ? 'FINAL · July 19, 2026' : String(stage ?? '').toUpperCase()}
                 </h3>
                 {isFinal && (
                   <span className="font-inter text-white text-xs font-bold opacity-80">
