@@ -521,9 +521,9 @@ export default function ScheduleTab({ liveMatches }: Props) {
     const map = new Map<string, Map<string, StaticMatch[]>>();
     for (const stage of STAGE_ORDER) map.set(stage, new Map());
     for (const f of sortedFixtures) {
-      if (!map.has(f.stage)) map.set(f.stage, new Map());
-      const key = f.group || f.stage;
-      const sm = map.get(f.stage)!;
+      if (!map.has(String(f.stage ?? ''))) map.set(String(f.stage ?? ''), new Map());
+    const key = f.group || String(f.stage ?? '');
+const sm = map.get(String(f.stage ?? ''))!;
       if (!sm.has(key)) sm.set(key, []);
       sm.get(key)!.push(f);
     }
