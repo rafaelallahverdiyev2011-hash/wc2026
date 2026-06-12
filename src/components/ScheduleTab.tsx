@@ -21,6 +21,19 @@ function etToLocal(timeET: string, date: string): string {
   d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
 }
+function etToLocalDate(timeET: string, date: string): string {
+  const match = timeET.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!match) return date;
+  let hours = parseInt(match[1]);
+  const minutes = parseInt(match[2]);
+  const ampm = match[3].toUpperCase();
+  if (ampm === 'PM' && hours !== 12) hours += 12;
+  if (ampm === 'AM' && hours === 12) hours = 0;
+  const utcHours = hours + 4;
+  const d = new Date(date + 'T00:00:00Z');
+  d.setUTCHours(utcHours, minutes, 0, 0);
+  return d.toLocaleDateString('en-CA');
+}
 interface StaticMatch {
   matchNum: number;
   group: string;
