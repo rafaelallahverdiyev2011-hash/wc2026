@@ -202,7 +202,9 @@ function formatMatchDate(iso: string): string {
 return new Date(iso + 'T12:00:00').toLocaleDateString('en-US', {
   month: 'long', day: 'numeric', year: 'numeric',
 });
-  function daysUntil(iso: string): number {
+}
+
+function daysUntil(iso: string): number {
   const now = new Date(); now.setHours(0, 0, 0, 0);
   return Math.round((new Date(iso + 'T00:00:00').getTime() - now.getTime()) / 86400000);
 }
