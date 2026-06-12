@@ -9,8 +9,7 @@ const HARDCODED_RESULTS: Record<string, { home: number; away: number }> = {
   "Czechia_South Korea": { home: 1, away: 2 },
 };
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const RAPIDAPI_KEY = import.meta.env.VITE_RAPIDAPI_KEY as string;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -173,8 +172,7 @@ export function msUntilRetry(): number {
 const RAPIDAPI_HOST = 'world-cup-2026-live-api.p.rapidapi.com';
 
 function getApiUrl(path: string): string {
-  if (import.meta.env.DEV) return `/rapidapi${path}`;
-  return `${SUPABASE_URL}/functions/v1/football-proxy?path=${encodeURIComponent(path)}`;
+  return `https://${RAPIDAPI_HOST}${path}`;
 }
 
 async function apiFetch<T>(path: string): Promise<T> {
@@ -187,16 +185,13 @@ async function apiFetch<T>(path: string): Promise<T> {
 
   lastFetchAttempt = Date.now();
   const url = getApiUrl(path);
-  const fullUrl = import.meta.env.DEV
-    ? `https://${RAPIDAPI_HOST}${path}` + ' (via Vite proxy)'
-    : `${SUPABASE_URL}/functions/v1/football-proxy?path=${encodeURIComponent(path)}`;
-  console.log(`[WC API] GET ${fullUrl}`);
+ console.log(`[WC API] GET https://${RAPIDAPI_HOST}${path}`);
 
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (!import.meta.env.DEV) {
-    headers['Authorization'] = `Bearer ${SUPABASE_ANON_KEY}`;
-    headers['apikey'] = SUPABASE_ANON_KEY;
-  }
+ const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'x-rapidapi-key': RAPIDAPI_KEY,
+    'x-rapidapi-host': RAPIDAPI_HOST,
+  };
   const res = await fetch(url, { headers });
 
   // 429 rate-limit: back off 2 minutes, throw so caller serves stale cache
