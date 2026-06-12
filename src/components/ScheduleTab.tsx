@@ -8,7 +8,18 @@ import {
 } from '../services/footballData';
 import { useInterval } from '../hooks/useInterval';
 import MatchDetailModal from './MatchDetailModal';
-
+function etToLocal(timeET: string, date: string): string {
+  const match = timeET.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  if (!match) return timeET;
+  let hours = parseInt(match[1]);
+  const minutes = parseInt(match[2]);
+  const ampm = match[3].toUpperCase();
+  if (ampm === 'PM' && hours !== 12) hours += 12;
+  if (ampm === 'AM' && hours === 12) hours = 0;
+  const utcHours = hours + 4;
+  const d = new Date(`${date}T${String(utcHours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:00Z`);
+  return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+}
 interface StaticMatch {
   matchNum: number;
   group: string;
@@ -371,7 +382,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
             </div>
           ) : (
             <div className="flex flex-col items-center gap-0.5">
-              <span className="font-inter text-gray-600 text-xs font-semibold">{fixture.timeET}</span>
+              <span className="font-inter text-gray-600 text-xs font-semibold">{etToLocal(fixture.timeET, fixture.date)}</span>
               <span className="font-anton text-gray-700 text-xs tracking-widest">VS</span>
             </div>
           )}
@@ -389,7 +400,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
       <div className="px-3 pb-3">
         <p className="font-inter text-xs text-gray-600">
           <span className="font-semibold text-gray-500">{formatMatchDate(fixture.date)}</span>
-          {!isFinished && <>{' · '}{fixture.timeET}</>}
+         {!isFinished && <>{' · '}{etToLocal(fixture.timeET, fixture.date)}</>}
         </p>
         {!isTBD && fixture.city !== 'TBD' && (
           <p className="font-inter text-xs text-gray-700 mt-0.5">{fixture.stadium}, {fixture.city}</p>
