@@ -908,7 +908,7 @@ export function isFinishedStatus(status: MatchStatus | string): boolean {
 
 export function normaliseStage(stage: string | null | undefined): string {
   if (!stage) return '';
-  const s = stage.toUpperCase();
+  const s = String(stage).toUpperCase();
   if (s.includes('GROUP')) return 'Group Stage';
   if (s === 'LAST_32' || s.includes('32')) return 'Round of 32';
   if (s === 'LAST_16' || s.includes('16')) return 'Round of 16';
@@ -916,9 +916,8 @@ export function normaliseStage(stage: string | null | undefined): string {
   if (s.includes('SEMI')) return 'Semifinals';
   if (s.includes('THIRD')) return 'Third Place';
   if (s === 'FINAL') return 'Final';
-  return stage;
+  return String(stage);
 }
-
 export function formatKickoff(utcDate: string): string {
   return new Date(utcDate).toLocaleTimeString('en-US', {
     hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York',
