@@ -434,8 +434,8 @@ function LiveStrip({ liveMatches }: { liveMatches: FDMatch[] }) {
         {live.map((m) => {
           const hs = m.score.fullTime.home ?? 0;
           const as_ = m.score.fullTime.away ?? 0;
-          const hCode = (m.homeTeam.tla || m.homeTeam.name.slice(0, 3)).toUpperCase();
-          const aCode = (m.awayTeam.tla || m.awayTeam.name.slice(0, 3)).toUpperCase();
+        const hCode = String(m.homeTeam.tla || m.homeTeam.name || '???').slice(0, 3).toUpperCase();
+const aCode = String(m.awayTeam.tla || m.awayTeam.name || '???').slice(0, 3).toUpperCase();
           return (
             <div
               key={m.id}
