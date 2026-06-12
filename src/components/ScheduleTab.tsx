@@ -17,7 +17,8 @@ function etToLocal(timeET: string, date: string): string {
   if (ampm === 'PM' && hours !== 12) hours += 12;
   if (ampm === 'AM' && hours === 12) hours = 0;
   const utcHours = hours + 4;
-  const d = new Date(`${date}T${String(utcHours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:00Z`);
+  const d = new Date(date + 'T00:00:00Z');
+  d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
 }
 interface StaticMatch {
