@@ -212,7 +212,23 @@ const DATE_STAGE_LABEL: Record<string, string> = {
   '2026-07-19':'Final',
 };
 
-const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
+function parseETKickoff(date: string, timeET: string): Date {
+  const m = timeET.match(/(\d+):(\d+)\s*(AM|PM)/i);
+  let hour = 12, minute = 0;
+  if (m) {
+    hour = parseInt(m[1]);
+    minute = parseInt(m[2]);
+    const isPM = m[3].toUpperCase() === 'PM';
+    if (isPM && hour !== 12) hour += 12;
+    if (!isPM && hour === 12) hour = 0;
+  }
+  return new Date(`${date}T${String(hour + 4).padStart(2,'0')}:${String(minute).padStart(2,'0')}:00Z`);
+}
+const ENRICHED_FIXTURES = ALL_FIXTURES.map(f => {
+  const kickoff = parseETKickoff(f.date, f.timeET);
+  return { ...f, kickoff, localDate: kickoff.toLocaleDateString('en-CA'), localTime: kickoff.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) };
+});
+const ALL_DATES = Array.from(new Set(ENRICHED_FIXTURES.map((f) => f.localDate))).sort();
 const TODAY_ISO = new Date().toLocaleDateString('en-CA');
 
 function formatDateBtn(iso: string): { top: string; bottom: string } {
