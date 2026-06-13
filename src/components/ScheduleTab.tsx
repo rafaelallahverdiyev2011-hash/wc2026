@@ -414,7 +414,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
       <div className="px-3 pb-3">
         <p className="font-inter text-xs text-gray-600">
           <span className="font-semibold text-gray-500">{formatMatchDate(fixture.date)</span>
-         {!isFinished && <>{' · '}{etToLocal(fixture.timeET, fixture.date)}</>}
+         {!isFinished && <><span> · </span>{etToLocal(fixture.timeET, fixture.date)}</>}
         </p>
         {!isTBD && fixture.city !== 'TBD' && (
           <p className="font-inter text-xs text-gray-700 mt-0.5">{fixture.stadium}, {fixture.city}</p>
