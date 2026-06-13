@@ -16,7 +16,7 @@ function etToLocal(timeET: string, date: string): string {
   const ampm = match[3].toUpperCase();
   if (ampm === 'PM' && hours !== 12) hours += 12;
   if (ampm === 'AM' && hours === 12) hours = 0;
-  const utcHours = hours + 4;;
+  const utcHours = hours + 5;
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
@@ -29,7 +29,7 @@ function etToLocalDate(timeET: string, date: string): string {
   const ampm = match[3].toUpperCase();
   if (ampm === 'PM' && hours !== 12) hours += 12;
   if (ampm === 'AM' && hours === 12) hours = 0;
-  const utcHours = hours + 4;
+  const utcHours = hours + 5;
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHours, minutes, 0, 0);
   return d.toLocaleDateString('en-CA');
@@ -220,7 +220,7 @@ function parseETKickoff(date: string, timeET: string): Date {
   const isPM = m[3].toUpperCase() === 'PM';
   if (isPM && hour !== 12) hour += 12;
   if (!isPM && hour === 12) hour = 0;
-  const utcHour = hour + 4; // ET to UTC (EDT = UTC-4)
+  const utcHour = hour + 5; // ET to UTC (EDT = UTC-4)
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHour, minute, 0, 0);
   return d;
