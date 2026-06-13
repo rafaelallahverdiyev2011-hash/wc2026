@@ -536,8 +536,8 @@ export default function ScheduleTab({ liveMatches }: Props) {
   }, [liveMatches, apiList]);
 
   const visibleFixtures = useMemo(() => {
-    if (!selectedDate) return ALL_FIXTURES;
-    return ALL_FIXTURES.filter((f) => etToLocalDate(f.timeET, f.date) === selectedDate);
+    if (!selectedDate) return ENRICHED_FIXTURES;
+    return ENRICHED_FIXTURES.filter((f) => f.localDate === selectedDate);
   }, [selectedDate]);
 
   // Sort: live first, then finished, then upcoming
