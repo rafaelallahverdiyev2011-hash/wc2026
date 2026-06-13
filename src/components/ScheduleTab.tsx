@@ -226,9 +226,9 @@ function parseETKickoff(date: string, timeET: string): Date {
 }
 const ENRICHED_FIXTURES = ALL_FIXTURES.map(f => {
   const kickoff = parseETKickoff(f.date, f.timeET);
-  return { ...f, kickoff, localDate: kickoff.toLocaleDateString('en-CA'), localTime: kickoff.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) };
+  return { ...f, kickoff, localDate: f.date, localTime: kickoff.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) };
 });
-const ALL_DATES = Array.from(new Set(ENRICHED_FIXTURES.map((f) => f.localDate))).sort();
+const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
 const TODAY_ISO = new Date().toLocaleDateString('en-CA');
 
 function formatDateBtn(iso: string): { top: string; bottom: string } {
