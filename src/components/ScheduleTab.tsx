@@ -220,7 +220,7 @@ function parseETKickoff(date: string, timeET: string): Date {
   const isPM = m[3].toUpperCase() === 'PM';
   if (isPM && hour !== 12) hour += 12;
   if (!isPM && hour === 12) hour = 0;
-  const utcHour = hour + 4;
+  const utcHour = hour + 4; // ET to UTC (EDT = UTC-4)
   const d = new Date(date + 'T00:00:00Z');
   d.setUTCHours(utcHour, minute, 0, 0);
   return d;
