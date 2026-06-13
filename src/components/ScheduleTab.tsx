@@ -214,19 +214,20 @@ const DATE_STAGE_LABEL: Record<string, string> = {
 
 function parseETKickoff(date: string, timeET: string): Date {
   const m = timeET.match(/(\d+):(\d+)\s*(AM|PM)/i);
-  let hour = 12, minute = 0;
-  if (m) {
-    hour = parseInt(m[1]);
-    minute = parseInt(m[2]);
-    const isPM = m[3].toUpperCase() === 'PM';
-    if (isPM && hour !== 12) hour += 12;
-    if (!isPM && hour === 12) hour = 0;
-  }
-  return new Date(`${date}T${String(hour + 4).padStart(2,'0')}:${String(minute).padStart(2,'0')}:00Z`);
+  if (!m) return new Date(date + 'T00:00:00');
+  let hour = parseInt(m[1]);
+  const minute = parseInt(m[2]);
+  const isPM = m[3].toUpperCase() === 'PM';
+  if (isPM && hour !== 12) hour += 12;
+  if (!isPM && hour === 12) hour = 0;
+  const utcHour = hour + 4;
+  const d = new Date(date + 'T00:00:00Z');
+  d.setUTCHours(utcHour, minute, 0, 0);
+  return d;
 }
 const ENRICHED_FIXTURES = ALL_FIXTURES.map(f => {
   const kickoff = parseETKickoff(f.date, f.timeET);
-  return { ...f, kickoff, localDate: f.date, localTime: kickoff.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }) };
+  return { ...f, kickoff, localDate: f.date, localTime: kickoff.toLocaleTimeString('az-AZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Baku' }) };
 });
 const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
 const TODAY_ISO = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baku' });
