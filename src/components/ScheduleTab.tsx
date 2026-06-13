@@ -412,7 +412,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
             </div>
           ) : (
             <div className="flex flex-col items-center gap-0.5">
-              <span className="font-inter text-gray-600 text-xs font-semibold">{etToLocal(fixture.timeET, fixture.date)}</span>
+              <span className="font-inter text-gray-600 text-xs font-semibold">{etToLocal(fixture.localTime, fixture.date)}</span>
               <span className="font-anton text-gray-700 text-xs tracking-widest">VS</span>
             </div>
           )}
@@ -430,7 +430,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
       <div className="px-3 pb-3">
         <p className="font-inter text-xs text-gray-600">
           <span className="font-semibold text-gray-500">{formatMatchDate(fixture.date)}</span>
-         {!isFinished && <>{' \u00B7 '}{etToLocal(fixture.timeET, fixture.date)}</>}
+         {!isFinished && <>{' \u00B7 '}{etToLocal(fixture.localTime, fixture.date)}</>}
         </p>
         {!isTBD && fixture.city !== 'TBD' && (
           <p className="font-inter text-xs text-gray-700 mt-0.5">{fixture.stadium}, {fixture.city}</p>
@@ -583,7 +583,7 @@ const sm = map.get(String(f.stage ?? ''))!;
             away:      modalItem.fixture.away,
             awayFlag:  modalItem.fixture.awayFlag,
             date:      modalItem.fixture.date,
-            timeET:    modalItem.fixture.timeET,
+            timeET:    modalItem.fixture.localTime,
             stadium:   modalItem.fixture.stadium,
             city:      modalItem.fixture.city,
             stage:     modalItem.fixture.stage,
