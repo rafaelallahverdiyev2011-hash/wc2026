@@ -317,7 +317,7 @@ interface MatchCardProps {
 }
 
 function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onMatchClick }: MatchCardProps) {
-  const days = daysUntil(fixture.date);
+  const days = daysUntil(fixture.localDate);
   const isTBD = fixture.home === 'TBD';
 
   const liveMatch = isTBD ? null : findLive(fixture.home, fixture.away, liveList);
@@ -412,7 +412,7 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
             </div>
           ) : (
             <div className="flex flex-col items-center gap-0.5">
-              <span className="font-inter text-gray-600 text-xs font-semibold">{etToLocal(fixture.localTime, fixture.date)}</span>
+            <span className="font-inter text-gray-600 text-xs font-semibold">{fixture.localTime}</span>
               <span className="font-anton text-gray-700 text-xs tracking-widest">VS</span>
             </div>
           )}
@@ -429,8 +429,8 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
       {/* Date + venue */}
       <div className="px-3 pb-3">
         <p className="font-inter text-xs text-gray-600">
-          <span className="font-semibold text-gray-500">{formatMatchDate(fixture.date)}</span>
-         {!isFinished && <>{' \u00B7 '}{etToLocal(fixture.localTime, fixture.date)}</>}
+          <span className="font-semibold text-gray-500">{formatMatchDate(fixture.localDate)}</span>
+         {!isFinished && <>{' \u00B7 '}{fixture.localTime}</>}
         </p>
         {!isTBD && fixture.city !== 'TBD' && (
           <p className="font-inter text-xs text-gray-700 mt-0.5">{fixture.stadium}, {fixture.city}</p>
