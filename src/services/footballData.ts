@@ -477,29 +477,25 @@ function parseDrawResponse(data: unknown): GroupDraw {
 function parseStatsResponse(data: unknown): MatchStatItem[] {
   if (!data || typeof data !== 'object') return [];
   const d = data as Record<string, unknown>;
-  const arr =
-    Array.isArray(d.stats)      ? d.stats      :
-    Array.isArray(d.statistics) ? d.statistics :
-    Array.isArray(d.data)       ? d.data       : null;
-  if (!arr || arr.length < 2) return [];
-
-  // Shape: [ { team: {...}, statistics: [ { type: "Possession", value: "55%" } ] }, ... ]
-  const homeStats = (arr[0] as Record<string, unknown>)?.statistics ??
-                    (arr[0] as Record<string, unknown>)?.stats ?? [];
-  const awayStats = (arr[1] as Record<string, unknown>)?.statistics ??
-                    (arr[1] as Record<string, unknown>)?.stats ?? [];
-
-  if (!Array.isArray(homeStats) || !Array.isArray(awayStats)) return [];
-
-  return homeStats.map((hItem: unknown, i: number) => {
-    const h = hItem as Record<string, unknown>;
-    const a = (awayStats[i] ?? {}) as Record<string, unknown>;
-    return {
-      type: String(h.type ?? h.name ?? `Stat ${i + 1}`),
-      home: h.value ?? h.value ?? null,
-      away: a.value ?? a.value ?? null,
-    };
-  });
+  const sections: unknown[] = Array.isArray(d.data) ? d.data : [];
+  const result: MatchStatItem[] = [];
+  for (const section of sections) {
+    const s = section as Record<string, unknown>;
+    const groups: unknown[] = Array.isArray(s.groups) ? s.groups : [];
+    for (const group of groups) {
+      const g = group as Record<string, unknown>;
+      const stats: unknown[] = Array.isArray(g.stats) ? g.stats : [];
+      for (const stat of stats) {
+        const st = stat as Record<string, unknown>;
+        result.push({
+          type: String(st.name ?? ''),
+          home: st.home ?? null,
+          away: st.away ?? null,
+        });
+      }
+    }
+  }
+  return result;
 }
 
 function parseLineupResponse(data: unknown): MatchLineup {
