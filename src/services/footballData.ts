@@ -550,6 +550,18 @@ function parseLineupResponse(data: unknown): MatchLineup {
 function parseCommentaryResponse(data: unknown): CommentaryEvent[] {
   if (!data || typeof data !== 'object') return [];
   const d = data as Record<string, unknown>;
+  const inner = (d.data ?? d) as Record<string, unknown>;
+  const incidents = Array.isArray(inner.incidents) ? inner.incidents : [];
+  if (incidents.length > 0) {
+    return incidents.map((e: unknown) => {
+      const ev = (e ?? {}) as Record<string, unknown>;
+      return {
+        minute: String(ev.minute ?? ''),
+        type:   String(ev.type ?? '').toLowerCase(),
+        text:   String(ev.text ?? ev.player ?? ''),
+      };
+    }).filter((e: CommentaryEvent) => e.minute || e.text);
+  }
   const arr =
     Array.isArray(d.commentary) ? d.commentary :
     Array.isArray(d.events)     ? d.events     :
