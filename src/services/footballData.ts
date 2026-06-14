@@ -241,7 +241,7 @@ interface RawMatch {
 function mapStatus(raw: string | number | undefined): MatchStatus {
   if (typeof raw === 'number') {
     // RapidAPI draw endpoint numeric status: 1=scheduled, 2=live, 3=finished
-    if (raw === 2) return 'IN_PLAY';
+    if (raw === 0 || raw === 2) return 'IN_PLAY';
     if (raw === 3) return 'FINISHED';
     return 'SCHEDULED';
   }
