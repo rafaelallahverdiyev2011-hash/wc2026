@@ -229,7 +229,7 @@ function parseETKickoff(date: string, timeET: string): Date {
 const ENRICHED_FIXTURES = ALL_FIXTURES.map(f => {
   const kickoff = parseETKickoff(f.date, f.timeET);
   const localDate = kickoff.toLocaleDateString('en-CA', { timeZone: 'Asia/Baku' });
-  return { ...f, kickoff, localDate, localTime: kickoff.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Baku' }) };
+  return { ...f, kickoff, localDate, localTime: f.timeET };
 });
 const ALL_DATES = Array.from(new Set(ALL_FIXTURES.map((f) => f.date))).sort();
 const TODAY_ISO = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Baku' });
