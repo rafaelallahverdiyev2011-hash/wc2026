@@ -311,7 +311,7 @@ function toFDMatch(raw: RawMatch): FDMatch {
   const hht  = raw.score?.halftime?.home ?? null;
   const aht  = raw.score?.halftime?.away ?? null;
   const min  = raw.minute ?? raw.elapsed;
-  const finalStatus = (hs !== null && as_ !== null && hs >= 0 && as_ >= 0)
+  const finalStatus = (status === 'SCHEDULED' && hs !== null && as_ !== null && hs >= 0 && as_ >= 0)
     ? 'FINISHED' as MatchStatus
     : status;
   let winner: FDScore['winner'] = null;
@@ -749,9 +749,6 @@ export async function prefetchAll(): Promise<void> {
 
 /** All WC matches from /wc/draw?stage=group, enriched with scores from standings. Cached 2 min. */
 export async function fetchAllMatches(): Promise<FDMatch[]> {
-  localStorage.removeItem('wc_draw_matches');
-  localStorage.removeItem('wc_standings');
-  localStorage.removeItem('wc_live');
   const hit = lsGet<FDMatch[]>('wc_draw_matches', LS_TTL_MS);
   if (hit) return hit;
   try {

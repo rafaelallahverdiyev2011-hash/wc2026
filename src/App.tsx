@@ -5,7 +5,7 @@ import KnockoutTab from './components/KnockoutTab';
 import TeamsTab from './components/TeamsTab';
 import ScheduleTab from './components/ScheduleTab';
 import {
-  fetchLiveMatches,
+  fetchAllMatches,
   prefetchAll,
   lastUpdatedLabel,
   canRetryNow,
@@ -96,9 +96,9 @@ export default function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const matches = await fetchLiveMatches();
+      const matches = await fetchAllMatches();
       setLiveMatches(matches);
-      setLastUpdated(lastUpdatedLabel('wc_live'));
+      setLastUpdated(lastUpdatedLabel('wc_draw_matches'));
       setPollMode(getPollMode(matches));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load live matches');
@@ -149,11 +149,11 @@ export default function App() {
 
   // Keep "last updated" label fresh every 30 s
   useEffect(() => {
-    const id = setInterval(() => setLastUpdated(lastUpdatedLabel('wc_live')), 30_000);
+    const id = setInterval(() => setLastUpdated(lastUpdatedLabel('wc_draw_matches')), 30_000);
     return () => clearInterval(id);
   }, []);
 
-  const liveCount = liveMatches.length;
+  const liveCount = liveMatches.filter((m) => isLiveStatus(m.status)).length;
 
   const countdownBlocks = [
     { value: countdown.days,    label: 'DAYS'    },
