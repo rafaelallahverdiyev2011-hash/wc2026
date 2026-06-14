@@ -181,42 +181,6 @@ const KNOCKOUT_FIXTURES: StaticMatch[] = [
   { matchNum:86,  group:'', home:'Runner-up D',        homeFlag:'🏳', away:'Runner-up G',        awayFlag:'🏳', date:'2026-07-03', timeET:'22:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Round of 32' },
   { matchNum:87,  group:'', home:'Winner J',           homeFlag:'🏳', away:'Runner-up H',        awayFlag:'🏳', date:'2026-07-04', timeET:'02:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Round of 32' },
   { matchNum:88,  group:'', home:'Winner K',           homeFlag:'🏳', away:'Best 3rd DEIJL',     awayFlag:'🏳', date:'2026-07-04', timeET:'05:30', stadium:'Arrowhead Stadium',       city:'Kansas City',         stage:'Round of 32' },
-
-cd ~/Desktop/wc2026
-cat > knockout_new.ts << 'EOF'
-const KNOCKOUT_FIXTURES: StaticMatch[] = [
-  { matchNum:73,  group:'', home:'Runner-up A',        homeFlag:'🏳', away:'Runner-up B',        awayFlag:'🏳', date:'2026-06-28', timeET:'23:00', stadium:'SoFi Stadium',            city:'Los Angeles',         stage:'Round of 32' },
-  { matchNum:74,  group:'', home:'Winner C',           homeFlag:'🏳', away:'Runner-up F',        awayFlag:'🏳', date:'2026-06-29', timeET:'21:00', stadium:'NRG Stadium',             city:'Houston',             stage:'Round of 32' },
-  { matchNum:75,  group:'', home:'Winner E',           homeFlag:'🏳', away:'Best 3rd ABCDF',     awayFlag:'🏳', date:'2026-06-30', timeET:'00:30', stadium:'Gillette Stadium',        city:'Boston',              stage:'Round of 32' },
-  { matchNum:76,  group:'', home:'Winner F',           homeFlag:'🏳', away:'Runner-up C',        awayFlag:'🏳', date:'2026-06-30', timeET:'05:00', stadium:'Estadio BBVA',            city:'Monterrey',           stage:'Round of 32' },
-  { matchNum:77,  group:'', home:'Runner-up E',        homeFlag:'🏳', away:'Runner-up I',        awayFlag:'🏳', date:'2026-06-30', timeET:'21:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Round of 32' },
-  { matchNum:78,  group:'', home:'Winner I',           homeFlag:'🏳', away:'Best 3rd CDFGH',     awayFlag:'🏳', date:'2026-07-01', timeET:'01:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Round of 32' },
-  { matchNum:79,  group:'', home:'Winner A',           homeFlag:'🏳', away:'Best 3rd CEFHI',     awayFlag:'🏳', date:'2026-07-01', timeET:'05:00', stadium:'Estadio Azteca',          city:'Mexico City',         stage:'Round of 32' },
-  { matchNum:80,  group:'', home:'Winner L',           homeFlag:'🏳', away:'Best 3rd EHIJK',     awayFlag:'🏳', date:'2026-07-01', timeET:'20:00', stadium:'Mercedes-Benz Stadium',   city:'Atlanta',             stage:'Round of 32' },
-  { matchNum:81,  group:'', home:'Winner G',           homeFlag:'🏳', away:'Best 3rd AEHIJ',     awayFlag:'🏳', date:'2026-07-02', timeET:'00:00', stadium:'Lumen Field',             city:'Seattle',             stage:'Round of 32' },
-  { matchNum:82,  group:'', home:'Winner D',           homeFlag:'🏳', away:'Best 3rd BEFIJ',     awayFlag:'🏳', date:'2026-07-02', timeET:'04:00', stadium:"Levi's Stadium",          city:'San Francisco',       stage:'Round of 32' },
-  { matchNum:83,  group:'', home:'Winner H',           homeFlag:'🏳', away:'Runner-up J',        awayFlag:'🏳', date:'2026-07-02', timeET:'23:00', stadium:'SoFi Stadium',            city:'Los Angeles',         stage:'Round of 32' },
-  { matchNum:84,  group:'', home:'Runner-up K',        homeFlag:'🏳', away:'Runner-up L',        awayFlag:'🏳', date:'2026-07-03', timeET:'03:00', stadium:'BMO Field',               city:'Toronto',             stage:'Round of 32' },
-  { matchNum:85,  group:'', home:'Winner B',           homeFlag:'🏳', away:'Best 3rd EFGIJ',     awayFlag:'🏳', date:'2026-07-03', timeET:'07:00', stadium:'BC Place',                city:'Vancouver',           stage:'Round of 32' },
-  { matchNum:86,  group:'', home:'Runner-up D',        homeFlag:'🏳', away:'Runner-up G',        awayFlag:'🏳', date:'2026-07-03', timeET:'22:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Round of 32' },
-  { matchNum:87,  group:'', home:'Winner J',           homeFlag:'🏳', away:'Runner-up H',        awayFlag:'🏳', date:'2026-07-04', timeET:'02:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Round of 32' },
-  { matchNum:88,  group:'', home:'Winner K',           homeFlag:'🏳', away:'Best 3rd DEIJL',     awayFlag:'🏳', date:'2026-07-04', timeET:'05:30', stadium:'Arrowhead Stadium',       city:'Kansas City',         stage:'Round of 32' },
-  { matchNum:89,  group:'', home:'Winner M73',         homeFlag:'🏳', away:'Winner M75',         awayFlag:'🏳', date:'2026-07-04', timeET:'21:00', stadium:'NRG Stadium',             city:'Houston',             stage:'Round of 16' },
-  { matchNum:90,  group:'', home:'Winner M74',         homeFlag:'🏳', away:'Winner M77',         awayFlag:'🏳', date:'2026-07-05', timeET:'01:00', stadium:'Lincoln Financial Field', city:'Philadelphia',        stage:'Round of 16' },
-  { matchNum:91,  group:'', home:'Winner M76',         homeFlag:'🏳', away:'Winner M78',         awayFlag:'🏳', date:'2026-07-06', timeET:'00:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Round of 16' },
-  { matchNum:92,  group:'', home:'Winner M79',         homeFlag:'🏳', away:'Winner M80',         awayFlag:'🏳', date:'2026-07-06', timeET:'04:00', stadium:'Estadio Azteca',          city:'Mexico City',         stage:'Round of 16' },
-  { matchNum:93,  group:'', home:'Winner M83',         homeFlag:'🏳', away:'Winner M84',         awayFlag:'🏳', date:'2026-07-06', timeET:'23:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Round of 16' },
-  { matchNum:94,  group:'', home:'Winner M81',         homeFlag:'🏳', away:'Winner M82',         awayFlag:'🏳', date:'2026-07-07', timeET:'04:00', stadium:'Lumen Field',             city:'Seattle',             stage:'Round of 16' },
-  { matchNum:95,  group:'', home:'Winner M86',         homeFlag:'🏳', away:'Winner M88',         awayFlag:'🏳', date:'2026-07-07', timeET:'20:00', stadium:'Mercedes-Benz Stadium',   city:'Atlanta',             stage:'Round of 16' },
-  { matchNum:96,  group:'', home:'Winner M85',         homeFlag:'🏳', away:'Winner M87',         awayFlag:'🏳', date:'2026-07-08', timeET:'00:00', stadium:'BC Place',                city:'Vancouver',           stage:'Round of 16' },
-  { matchNum:97,  group:'', home:'Winner M89',         homeFlag:'🏳', away:'Winner M90',         awayFlag:'🏳', date:'2026-07-10', timeET:'00:00', stadium:'Gillette Stadium',        city:'Boston',              stage:'Quarterfinals' },
-  { matchNum:98,  group:'', home:'Winner M93',         homeFlag:'🏳', away:'Winner M94',         awayFlag:'🏳', date:'2026-07-10', timeET:'23:00', stadium:'SoFi Stadium',            city:'Los Angeles',         stage:'Quarterfinals' },
-  { matchNum:99,  group:'', home:'Winner M91',         homeFlag:'🏳', away:'Winner M92',         awayFlag:'🏳', date:'2026-07-12', timeET:'01:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Quarterfinals' },
-  { matchNum:100, group:'', home:'Winner M95',         homeFlag:'🏳', away:'Winner M96',         awayFlag:'🏳', date:'2026-07-12', timeET:'05:00', stadium:'Arrowhead Stadium',       city:'Kansas City',         stage:'Quarterfinals' },
-  { matchNum:101, group:'', home:'Winner M97',         homeFlag:'🏳', away:'Winner M98',         awayFlag:'🏳', date:'2026-07-14', timeET:'23:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Semifinals' },
-  { matchNum:102, group:'', home:'Winner M99',         homeFlag:'🏳', away:'Winner M100',        awayFlag:'🏳', date:'2026-07-15', timeET:'23:00', stadium:'Mercedes-Benz Stadium',   city:'Atlanta',             stage:'Semifinals' },
-  { matchNum:103, group:'', home:'Loser M101',         homeFlag:'🏳', away:'Loser M102',         awayFlag:'🏳', date:'2026-07-19', timeET:'01:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Third Place' },
-  { matchNum:104, group:'', home:'World Cup Winner',   homeFlag:'🏳', away:'World Cup Runner-up',awayFlag:'🏳', date:'2026-07-19', timeET:'23:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Final' },
 ];
 
 
