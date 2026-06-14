@@ -1,4 +1,4 @@
-// World Cup 2026 Live API (RapidAPI) — world-cup-2026-live-api.p.rapidapi.com
+// World Cup 2026 Live API (RapidAPI) — free-api-live-football-data.p.rapidapi.com
 // Dev: Vite proxy /rapidapi/* → API host
 // Prod: Supabase Edge Function at football-proxy
 
@@ -169,7 +169,7 @@ export function msUntilRetry(): number {
 
 // ── HTTP fetch ────────────────────────────────────────────────────────────────
 
-const RAPIDAPI_HOST = 'world-cup-2026-live-api.p.rapidapi.com';
+const RAPIDAPI_HOST = 'free-api-live-football-data.p.rapidapi.com';
 
 function getApiUrl(path: string): string {
   return `https://${RAPIDAPI_HOST}${path}`;
