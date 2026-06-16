@@ -4,6 +4,7 @@ import LiveMatchesTab from './components/LiveMatchesTab';
 import KnockoutTab from './components/KnockoutTab';
 import TeamsTab from './components/TeamsTab';
 import ScheduleTab from './components/ScheduleTab';
+import PredictTab from './components/PredictTab';
 import {
   fetchAllMatches,
   prefetchAll,
@@ -78,6 +79,7 @@ const TABS = [
   { id: 'schedule', label: 'SCHEDULE' },
   { id: 'live',     label: 'LIVE'     },
   { id: 'knockout', label: 'BRACKET'  },
+  { id: 'predict',  label: 'PREDICT'  },
 ];
 
 export default function App() {
@@ -422,6 +424,7 @@ export default function App() {
           />
         )}
         {activeTab === 'knockout' && <KnockoutTab liveMatches={liveMatches} />}
+        {activeTab === 'predict'  && <PredictTab />}
       </main>
       </div>
       <footer>
