@@ -1,4 +1,4 @@
-import { useState } from "react";
+new_component = '''import { useState } from "react";
 
 const GROUPS: Record<string, string[]> = {
   A: ["Mexico", "South Korea", "South Africa", "Czechia"],
@@ -308,3 +308,8 @@ export default function PredictTab() {
     </div>
   );
 }
+'''
+
+with open('src/components/PredictTab.tsx', 'w', encoding='utf-8') as f:
+    f.write(new_component)
+print('Done')
