@@ -80,7 +80,6 @@ const TABS = [
   { id: 'schedule', label: 'SCHEDULE' },
   { id: 'live',     label: 'LIVE'     },
   { id: 'knockout', label: 'BRACKET'  },
-  { id: 'game',     label: 'GAME'     },
   { id: 'predict',  label: 'PREDICT'  },
 ];
 
@@ -426,7 +425,6 @@ export default function App() {
           />
         )}
         {activeTab === 'knockout' && <KnockoutTab liveMatches={liveMatches} />}
-        {activeTab === 'game'     && <GameTab />}
         {activeTab === 'predict'  && <PredictTab />}
       </main>
       </div>
