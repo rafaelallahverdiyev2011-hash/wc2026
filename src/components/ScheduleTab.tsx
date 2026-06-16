@@ -445,6 +445,27 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
         </div>
       </div>
 
+      {/* Goal scorers */}
+      {isFinished && apiMatch?.goals && apiMatch.goals.length > 0 && (
+        <div className="px-3 pb-2 pt-1" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex gap-2 justify-between">
+            <div className="flex-1 text-left">
+              {apiMatch.goals.filter(g => g.team === 'home').map((g, i) => (
+                <p key={i} className="font-inter text-xs" style={{ color: '#9ca3af' }}>
+                  ⚽ {g.scorer}{g.minute ? ` ${g.minute}'` : ''}{g.type === 'own-goal' ? ' (OG)' : g.type === 'penalty' ? ' (P)' : ''}
+                </p>
+              ))}
+            </div>
+            <div className="flex-1 text-right">
+              {apiMatch.goals.filter(g => g.team === 'away').map((g, i) => (
+                <p key={i} className="font-inter text-xs" style={{ color: '#9ca3af' }}>
+                  {g.scorer}{g.minute ? ` ${g.minute}'` : ''}{g.type === 'own-goal' ? ' (OG)' : g.type === 'penalty' ? ' (P)' : ''} ⚽
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       {/* Date + venue */}
       <div className="px-3 pb-3">
         <p className="font-inter text-xs text-gray-600">
