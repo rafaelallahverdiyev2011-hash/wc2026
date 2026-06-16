@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { fetchAllMatches, getFlag, FDMatch } from "../services/footballData";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -19,13 +20,40 @@ async function supaFetch(path: string, options: RequestInit = {}) {
   return text ? JSON.parse(text) : [];
 }
 
-const UPCOMING_MATCHES = [
-  { matchNum:25, home:"Germany",     homeFlag:"🇩🇪", away:"Curacao",      awayFlag:"🇨🇼", date:"2026-06-14", timeET:"9:00 PM ET" },
-  { matchNum:26, home:"Ivory Coast", homeFlag:"🇨🇮", away:"Ecuador",      awayFlag:"🇪🇨", date:"2026-06-15", timeET:"3:00 AM ET" },
-  { matchNum:13, home:"Brazil",      homeFlag:"🇧🇷", away:"Morocco",      awayFlag:"🇲🇦", date:"2026-06-14", timeET:"2:00 AM ET" },
-  { matchNum:20, home:"Australia",   homeFlag:"🇦🇺", away:"Turkiye",      awayFlag:"🇹🇷", date:"2026-06-14", timeET:"8:00 AM ET" },
-  { matchNum:8,  home:"Qatar",       homeFlag:"🇶🇦", away:"Switzerland",  awayFlag:"🇨🇭", date:"2026-06-13", timeET:"11:00 PM ET" },
-].filter(m => new Date(m.date) >= new Date(new Date().toDateString()));
+interface UpcomingMatch {
+  matchNum: number;
+  home: string;
+  homeFlag: string;
+  away: string;
+  awayFlag: string;
+  date: string;
+  timeET: string;
+}
+
+function formatTimeET(utcDate: string): string {
+  return new Date(utcDate).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "America/New_York",
+  }) + " ET";
+}
+
+function toUpcomingMatches(matches: FDMatch[]): UpcomingMatch[] {
+  const now = Date.now();
+  return matches
+    .filter(m => m.status === "SCHEDULED" && m.utcDate && new Date(m.utcDate).getTime() > now)
+    .sort((a, b) => new Date(a.utcDate).getTime() - new Date(b.utcDate).getTime())
+    .slice(0, 10)
+    .map(m => ({
+      matchNum: m.id,
+      home: m.homeTeam.name,
+      homeFlag: getFlag(m.homeTeam.name),
+      away: m.awayTeam.name,
+      awayFlag: getFlag(m.awayTeam.name),
+      date: m.utcDate,
+      timeET: formatTimeET(m.utcDate),
+    }));
+}
 
 interface LeaderRow { username: string; email: string; total_points: number; predictions_count: number; correct_scores: number; correct_winners: number; }
 interface Prediction { match_num: number; predicted_home_score: number; predicted_away_score: number; }
@@ -41,12 +69,21 @@ export default function GameTab() {
   const [myPreds, setMyPreds] = useState<Prediction[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [upcomingMatches, setUpcomingMatches] = useState<UpcomingMatch[]>([]);
+  const [matchesLoading, setMatchesLoading] = useState(true);
 
   useEffect(() => {
     supaFetch("leaderboard?select=*&order=total_points.desc&limit=50")
       .then(setLeaderboard)
       .catch(console.error)
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    fetchAllMatches()
+      .then(matches => setUpcomingMatches(toUpcomingMatches(matches)))
+      .catch(console.error)
+      .finally(() => setMatchesLoading(false));
   }, []);
 
   useEffect(() => {
@@ -65,10 +102,10 @@ export default function GameTab() {
     try {
       const entries = Object.entries(picks);
       if (entries.length === 0) { setError("Make at least one prediction!"); setSubmitting(false); return; }
-      
+
       for (const [matchNumStr, scores] of entries) {
         const matchNum = Number(matchNumStr);
-        const match = UPCOMING_MATCHES.find(m => m.matchNum === matchNum);
+        const match = upcomingMatches.find(m => m.matchNum === matchNum);
         if (!match) continue;
         if (alreadyPredicted(matchNum)) continue;
         await supaFetch("predictions", {
@@ -82,7 +119,6 @@ export default function GameTab() {
         });
       }
 
-      // Upsert leaderboard entry
       const existing = leaderboard.find(r => r.email === email);
       if (!existing) {
         await supaFetch("leaderboard", {
@@ -106,13 +142,11 @@ export default function GameTab() {
 
   return (
     <div style={{ color: "white", paddingBottom: "60px" }}>
-      {/* Header */}
       <div style={{ background: "linear-gradient(135deg, #E3000B, #0057A8)", padding: "20px", marginBottom: "24px", borderRadius: "8px", textAlign: "center" }}>
         <h1 style={{ fontFamily: "Anton, sans-serif", fontSize: "32px", letterSpacing: "0.1em", margin: "0 0 4px" }}>🏆 PREDICTION GAME</h1>
         <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.8)", margin: 0 }}>Predict match scores · Earn points · Climb the leaderboard</p>
       </div>
 
-      {/* Points system */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "8px", marginBottom: "24px" }}>
         {[["⚽ Exact Score","5 pts","Predict the exact final score"],["✓ Correct Winner","3 pts","Predict who wins or draw"],["✗ Wrong","0 pts","Better luck next time"]].map(([title,pts,desc]) => (
           <div key={title} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "12px", textAlign: "center" }}>
@@ -123,7 +157,6 @@ export default function GameTab() {
         ))}
       </div>
 
-      {/* Tabs */}
       <div style={{ display: "flex", gap: "8px", marginBottom: "24px" }}>
         {(["leaderboard","predict"] as const).map(v => (
           <button key={v} onClick={() => setView(v)} style={{ flex: 1, padding: "10px", fontFamily: "Anton, sans-serif", fontSize: "14px", letterSpacing: "0.1em", border: "none", borderRadius: "6px", cursor: "pointer", background: view === v ? "#E3000B" : "rgba(255,255,255,0.06)", color: "white", textTransform: "uppercase" }}>
@@ -132,17 +165,13 @@ export default function GameTab() {
         ))}
       </div>
 
-      {/* LEADERBOARD */}
       {view === "leaderboard" && (
         <div>
           <h2 style={{ fontFamily: "Anton, sans-serif", fontSize: "20px", color: "#C8D400", marginBottom: "16px", letterSpacing: "0.1em" }}>GLOBAL LEADERBOARD</h2>
           {loading ? (
             <div style={{ textAlign: "center", padding: "40px", color: "#555" }}>Loading...</div>
           ) : leaderboard.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px", background: "rgba(255,255,255,0.03)", borderRadius: "8px", color: "#555" }}>
-              <div style={{ fontSize: "48px", marginBottom: "12px" }}>🏆</div>
-              <p>No predictions yet. Be the first!</p>
-            </div>
+            <div style={{ textAlign: "center", padding: "40px", color: "#555" }}>No predictions yet. Be the first!</div>
           ) : (
             <div>
               {leaderboard.map((row, i) => (
@@ -163,7 +192,6 @@ export default function GameTab() {
         </div>
       )}
 
-      {/* PREDICT */}
       {view === "predict" && (
         <div>
           {step === "info" && (
@@ -189,16 +217,20 @@ export default function GameTab() {
             <div>
               <h2 style={{ fontFamily: "Anton, sans-serif", fontSize: "20px", color: "#C8D400", marginBottom: "4px" }}>PREDICT SCORES</h2>
               <p style={{ fontSize: "12px", color: "#666", marginBottom: "20px" }}>Welcome {username}! Pick scores for upcoming matches.</p>
-              {UPCOMING_MATCHES.length === 0 ? (
+              {matchesLoading ? (
+                <div style={{ textAlign: "center", padding: "40px", color: "#555" }}>Loading upcoming matches...</div>
+              ) : upcomingMatches.length === 0 ? (
                 <div style={{ textAlign: "center", padding: "40px", color: "#555" }}>No upcoming matches available for prediction.</div>
               ) : (
-                UPCOMING_MATCHES.map(match => {
+                upcomingMatches.map(match => {
                   const already = alreadyPredicted(match.matchNum);
                   const pred = myPreds.find(p => p.match_num === match.matchNum);
                   return (
                     <div key={match.matchNum} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", padding: "16px", marginBottom: "12px", opacity: already ? 0.6 : 1 }}>
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
-                        <span style={{ fontSize: "11px", color: "#555", textTransform: "uppercase", letterSpacing: "0.1em" }}>Match #{match.matchNum}</span>
+                        <span style={{ fontSize: "11px", color: "#555", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                          {new Date(match.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                        </span>
                         <span style={{ fontSize: "11px", color: "#888" }}>{match.timeET}</span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
