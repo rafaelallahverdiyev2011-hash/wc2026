@@ -288,64 +288,7 @@ export default function LiveMatchesTab({ liveMatches, isLoading, error, lastUpda
             )}
           </div>
 
-          {/* Next upcoming match */}
-          {nextMatch && (
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-px flex-1" style={{ backgroundColor: 'rgba(255,255,255,0.06)' }} />
-                <span className="font-anton text-xs tracking-[0.3em] uppercase" style={{ color: '#4b5563' }}>
-                  NEXT MATCH
-                </span>
-                <div className="h-px flex-1" style={{ backgroundColor: 'rgba(255,255,255,0.06)' }} />
-              </div>
-
-              <div
-                className="p-6 flex flex-col sm:flex-row items-center gap-6"
-                style={{
-                  backgroundColor: '#111827',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  borderTop: '3px solid #0057A8',
-                }}
-              >
-                {/* Teams */}
-                <div className="flex items-center gap-4 flex-1">
-                  <div className="text-center">
-                    <span className="text-4xl block mb-1.5">{nextMatch.homeFlag}</span>
-                    <p className="font-inter font-black text-white text-sm uppercase tracking-wide">{nextMatch.home}</p>
-                  </div>
-                  <div className="flex flex-col items-center gap-1 px-4">
-                    <span className="font-anton text-2xl" style={{ color: '#1f2937' }}>VS</span>
-                  </div>
-                  <div className="text-center">
-                    <span className="text-4xl block mb-1.5">{nextMatch.awayFlag}</span>
-                    <p className="font-inter font-black text-white text-sm uppercase tracking-wide">{nextMatch.away}</p>
-                  </div>
-                </div>
-
-                {/* Match info */}
-                <div
-                  className="flex flex-col items-center sm:items-end gap-1.5 flex-shrink-0"
-                  style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', paddingLeft: 24 }}
-                >
-                  <div
-                    className="px-3 py-1.5 font-anton text-white text-sm tracking-widest"
-                    style={{ backgroundColor: '#0057A8' }}
-                  >
-                    {nextMatch.timeET}
-                  </div>
-                  <p className="font-inter text-xs font-semibold" style={{ color: '#9ca3af' }}>
-                    {daysHoursUntil(nextMatch.date)}
-                  </p>
-                  <p className="font-inter text-xs" style={{ color: '#4b5563' }}>
-                    {nextMatch.stadium}
-                  </p>
-                  <p className="font-inter text-xs" style={{ color: '#4b5563' }}>
-                    {nextMatch.city}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          
         </div>
       )}
 
