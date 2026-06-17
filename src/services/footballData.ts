@@ -713,25 +713,6 @@ function parseDrawMatches(drawData: unknown, standingsData: unknown): FDMatch[] 
     const strId = typeof raw.matchId === 'string' ? raw.matchId : null;
     if (strId) matchIdMap.set(match.id, strId);
 
-    // If score is still null but teams have played, infer from standings
-    if (match.score.fullTime.home === null || match.score.fullTime.away === null) {
-      const homeName = typeof raw.home === 'string' ? raw.home : (raw.homeTeam as RawTeam)?.name ?? '';
-      const awayName = typeof raw.away === 'string' ? raw.away : (raw.awayTeam as RawTeam)?.name ?? '';
-      const inferred = inferScore(homeName, awayName, lookup);
-      if (inferred) {
-        const { hs, as_ } = inferred;
-        const winner: FDScore['winner'] = hs > as_ ? 'HOME_TEAM' : as_ > hs ? 'AWAY_TEAM' : 'DRAW';
-        console.log(`[WC API] INFERRED SCORE: ${homeName} ${hs}–${as_} ${awayName} (status: ${match.status}→FINISHED)`);
-        return {
-          ...match,
-          status: 'FINISHED' as MatchStatus,
-          score: {
-            ...match.score,
-            winner,
-            fullTime: { home: hs, away: as_ },
-          },
-        };
-      }
     }
 
     console.log(`[WC API] MATCH STATUS: ${raw.home ?? ''} vs ${raw.away ?? ''} → raw.status=${JSON.stringify(raw.status)} → mapped=${match.status} score=${match.score.fullTime.home}:${match.score.fullTime.away}`);
