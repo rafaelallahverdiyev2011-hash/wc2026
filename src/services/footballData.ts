@@ -713,7 +713,6 @@ function parseDrawMatches(drawData: unknown, standingsData: unknown): FDMatch[] 
     const strId = typeof raw.matchId === 'string' ? raw.matchId : null;
     if (strId) matchIdMap.set(match.id, strId);
 
-    }
 
     console.log(`[WC API] MATCH STATUS: ${raw.home ?? ''} vs ${raw.away ?? ''} → raw.status=${JSON.stringify(raw.status)} → mapped=${match.status} score=${match.score.fullTime.home}:${match.score.fullTime.away}`);
     return match;
