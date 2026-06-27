@@ -342,12 +342,15 @@ function MatchCard({ fixture, liveList, apiList, isFinal = false, accentHex, onM
   const liveMatch = isTBD ? null : findLive(fixture.home, fixture.away, liveList);
   const apiMatch  = isTBD ? null : findApiMatch(fixture, apiList);
 
+  const isReversed = apiMatch != null && fuzzy(fixture.home, apiMatch.awayTeam.name) && fuzzy(fixture.away, apiMatch.homeTeam.name);
   const isLive     = liveMatch !== null;
   const isFinished = !isLive && apiMatch != null && isFinishedStatus(apiMatch.status);
 
   // Prefer live score, then API score
-  const homeScore = liveMatch?.score.fullTime.home ?? apiMatch?.score.fullTime.home ?? null;
-  const awayScore = liveMatch?.score.fullTime.away ?? apiMatch?.score.fullTime.away ?? null;
+  const _hs = liveMatch?.score.fullTime.home ?? apiMatch?.score.fullTime.home ?? null;
+  const _as = liveMatch?.score.fullTime.away ?? apiMatch?.score.fullTime.away ?? null;
+  const homeScore = isReversed ? _as : _hs;
+  const awayScore = isReversed ? _hs : _as;
   const minute    = liveMatch?.minute ?? null;
 
   const homeWon = isFinished && homeScore !== null && awayScore !== null && homeScore > awayScore;
