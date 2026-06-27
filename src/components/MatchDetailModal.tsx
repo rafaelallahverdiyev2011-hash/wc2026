@@ -234,13 +234,14 @@ function OverviewTab({
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 
-function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag, homeScore = null, awayScore = null }: {
+function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag, homeScore = null, awayScore = null, isReversed = false }: {
   matchId: number;
   isFinished: boolean;
   match: FDMatch | null;
   info: StaticInfo | null;
   homeFlag: string; awayFlag: string;
   homeScore?: number | null; awayScore?: number | null;
+  isReversed?: boolean;
 }) {
   const [stats, setStats] = useState<MatchStatItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -316,8 +317,8 @@ function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag, homeSc
 
       <div className="space-y-2">
         {stats.map((stat) => {
-          const hVal = stat.home ?? 0;
-          const aVal = stat.away ?? 0;
+          const hVal = (isReversed ? stat.away : stat.home) ?? 0;
+          const aVal = (isReversed ? stat.home : stat.away) ?? 0;
           const hNum = parseFloat(String(hVal)) || 0;
           const aNum = parseFloat(String(aVal)) || 0;
           const total = hNum + aNum || 1;
@@ -363,10 +364,11 @@ function PlayerRow({ player }: { player: { id: number; name: string; number: num
   );
 }
 
-function LineupsTab({ matchId, info, match }: {
+function LineupsTab({ matchId, info, match, isReversed = false }: {
   matchId: number;
   info: StaticInfo | null;
   match: FDMatch | null;
+  isReversed?: boolean;
 }) {
   const [lineup, setLineup] = useState<MatchLineup | null>(null);
   const [loading, setLoading] = useState(true);
@@ -384,8 +386,10 @@ function LineupsTab({ matchId, info, match }: {
     return <EmptyState message="Lineups not yet available" />;
   }
 
-  const homeLabel = lineup.homeTeam || info?.home || match?.homeTeam.name || 'Home';
-  const awayLabel = lineup.awayTeam || info?.away || match?.awayTeam.name || 'Away';
+  const _homeLabel = lineup.homeTeam || info?.home || match?.homeTeam.name || 'Home';
+  const _awayLabel = lineup.awayTeam || info?.away || match?.awayTeam.name || 'Away';
+  const homeLabel = isReversed ? _awayLabel : _homeLabel;
+  const awayLabel = isReversed ? _homeLabel : _awayLabel;
   const hFlag = getFlag(lineup.homeTeam || info?.home);
   const aFlag = getFlag(lineup.awayTeam || info?.away);
 
@@ -640,12 +644,13 @@ export default function MatchDetailModal({ matchId, staticInfo, apiMatch: initia
               info={staticInfo}
               homeFlag={homeFlag}
               awayFlag={awayFlag}
+              isReversed={isReversed}
             />
           ) : tab === 'stats' && (
             <EmptyState message={finished ? 'Stats not available' : 'Stats available after kick-off'} />
           )}
           {tab === 'lineups' && matchId ? (
-            <LineupsTab matchId={matchId} info={staticInfo} match={match} />
+            <LineupsTab matchId={matchId} info={staticInfo} match={match} isReversed={isReversed} />
           ) : tab === 'lineups' && (
             <EmptyState message="Lineups not yet available" />
           )}
