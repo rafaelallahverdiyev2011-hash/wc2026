@@ -621,10 +621,10 @@ const sm = map.get(String(f.stage ?? ''))!;
         <MatchDetailModal
           matchId={modalItem.apiMatch?.id ?? null}
           staticInfo={{
-            home:      modalItem.apiMatch && fuzzy(modalItem.fixture.home, modalItem.apiMatch.awayTeam.name) ? modalItem.apiMatch.homeTeam.name : modalItem.fixture.home,
-            homeFlag:  modalItem.apiMatch && fuzzy(modalItem.fixture.home, modalItem.apiMatch.awayTeam.name) ? getFlag(modalItem.apiMatch.homeTeam.name) : modalItem.fixture.homeFlag,
-            away:      modalItem.apiMatch && fuzzy(modalItem.fixture.home, modalItem.apiMatch.awayTeam.name) ? modalItem.apiMatch.awayTeam.name : modalItem.fixture.away,
-            awayFlag:  modalItem.apiMatch && fuzzy(modalItem.fixture.home, modalItem.apiMatch.awayTeam.name) ? getFlag(modalItem.apiMatch.awayTeam.name) : modalItem.fixture.awayFlag,
+            home:      modalItem.fixture.home,
+            homeFlag:  modalItem.fixture.homeFlag,
+            away:      modalItem.fixture.away,
+            awayFlag:  modalItem.fixture.awayFlag,
             date:      modalItem.fixture.date,
             timeET:    modalItem.fixture.localTime,
             stadium:   modalItem.fixture.stadium,
