@@ -302,6 +302,7 @@ function parseGoalEvents(raw: RawMatch, homeId: number): GoalEvent[] {
 }
 
 function toFDMatch(raw: RawMatch): FDMatch {
+  console.log('RAW MATCH DEBUG:', JSON.stringify(raw, null, 2));
   const home  = toTeam(raw.homeTeam ?? raw.home, 'TBD');
   const away  = toTeam(raw.awayTeam ?? raw.away, 'TBD');
   const status = mapStatus(raw.status);
