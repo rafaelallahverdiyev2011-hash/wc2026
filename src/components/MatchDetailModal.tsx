@@ -153,14 +153,15 @@ function GoalScorers({
 // ── Overview ──────────────────────────────────────────────────────────────────
 
 function OverviewTab({
-  info, match, homeFlag, awayFlag, homeScore = null, awayScore = null,
+  info, match, homeFlag, awayFlag,
 }: {
   info: StaticInfo | null;
   match: FDMatch | null;
   homeFlag: string; awayFlag: string;
-  homeScore?: number | null; awayScore?: number | null;
 }) {
   const finished = isFinishedStatus(match?.status ?? '');
+  const homeScore = match?.score.fullTime.home ?? null;
+  const awayScore = match?.score.fullTime.away ?? null;
   const htHome = match?.score.halfTime.home;
   const htAway = match?.score.halfTime.away;
   const hasGoals = (match?.goals?.length ?? 0) > 0;
@@ -234,13 +235,12 @@ function OverviewTab({
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 
-function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag, homeScore = null, awayScore = null }: {
+function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag }: {
   matchId: number;
   isFinished: boolean;
   match: FDMatch | null;
   info: StaticInfo | null;
   homeFlag: string; awayFlag: string;
-  homeScore?: number | null; awayScore?: number | null;
 }) {
   const [stats, setStats] = useState<MatchStatItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -253,6 +253,8 @@ function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag, homeSc
     });
   }, [matchId]);
 
+  const homeScore = match?.score.fullTime.home ?? null;
+  const awayScore = match?.score.fullTime.away ?? null;
   const hasScore  = homeScore !== null && awayScore !== null;
 
   if (loading) return <Spinner />;
@@ -504,17 +506,12 @@ export default function MatchDetailModal({ matchId, staticInfo, apiMatch: initia
   }, [onClose]);
 
   const match    = liveMatch ?? initialApiMatch;
-  const isReversed = match != null && staticInfo != null &&
-    match.homeTeam.name.toLowerCase().slice(0,5) !== staticInfo.home.toLowerCase().slice(0,5) &&
-    match.awayTeam.name.toLowerCase().slice(0,5) === staticInfo.home.toLowerCase().slice(0,5);
   const homeFlag = staticInfo?.homeFlag ?? getFlag(match?.homeTeam.name);
   const awayFlag = staticInfo?.awayFlag ?? getFlag(match?.awayTeam.name);
   const homeName = staticInfo?.home ?? match?.homeTeam.name ?? 'Home';
   const awayName = staticInfo?.away ?? match?.awayTeam.name ?? 'Away';
-  const _rawHome = match?.score.fullTime.home ?? null;
-  const _rawAway = match?.score.fullTime.away ?? null;
-  const homeScore = isReversed ? _rawAway : _rawHome;
-  const awayScore = isReversed ? _rawHome : _rawAway;
+  const homeScore = match?.score.fullTime.home ?? null;
+  const awayScore = match?.score.fullTime.away ?? null;
   const hasScore  = homeScore !== null && awayScore !== null;
   const live      = isLiveStatus(match?.status ?? '');
   const finished  = isFinishedStatus(match?.status ?? '');
@@ -630,7 +627,7 @@ export default function MatchDetailModal({ matchId, staticInfo, apiMatch: initia
         {/* Tab content */}
         <div className="overflow-y-auto flex-1" style={{ overscrollBehavior: 'contain' }}>
           {tab === 'overview' && (
-            <OverviewTab info={staticInfo} match={match} homeFlag={homeFlag} awayFlag={awayFlag} homeScore={homeScore} awayScore={awayScore} />
+            <OverviewTab info={staticInfo} match={match} homeFlag={homeFlag} awayFlag={awayFlag} />
           )}
           {tab === 'stats' && matchId ? (
             <StatsTab
