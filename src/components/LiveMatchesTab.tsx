@@ -13,14 +13,22 @@ interface NextMatch {
 }
 
 const UPCOMING_FIXTURES: NextMatch[] = [
-  { home:'South Korea', homeFlag:'🇰🇷', away:'Czechia',              awayFlag:'🇨🇿', date:'2026-06-12', timeET:'9:00 PM ET',  stadium:'AT&T Stadium',            city:'Dallas'             },
-  { home:'Canada',      homeFlag:'🇨🇦', away:'Bosnia & Herzegovina', awayFlag:'🇧🇦', date:'2026-06-12', timeET:'6:00 PM ET',  stadium:'BC Place',                city:'Vancouver'          },
-  { home:'Qatar',       homeFlag:'🇶🇦', away:'Switzerland',          awayFlag:'🇨🇭', date:'2026-06-12', timeET:'3:00 PM ET',  stadium:'MetLife Stadium',         city:'New York/New Jersey'},
-  { home:'Brazil',      homeFlag:'🇧🇷', away:'Morocco',              awayFlag:'🇲🇦', date:'2026-06-13', timeET:'9:00 PM ET',  stadium:'Rose Bowl',               city:'Los Angeles'        },
-  { home:'Haiti',       homeFlag:'🇭🇹', away:'Scotland',             awayFlag:'🏴󠁧󠁢󠁳󠁣󠁴󠁿', date:'2026-06-13', timeET:'3:00 PM ET',  stadium:'AT&T Stadium',            city:'Dallas'             },
-  { home:'USA',         homeFlag:'🇺🇸', away:'Paraguay',             awayFlag:'🇵🇾', date:'2026-06-14', timeET:'6:00 PM ET',  stadium:'SoFi Stadium',            city:'Los Angeles'        },
-  { home:'Australia',   homeFlag:'🇦🇺', away:'Turkey',               awayFlag:'🇹🇷', date:'2026-06-14', timeET:'9:00 PM ET',  stadium:'AT&T Stadium',            city:'Dallas'             },
-  { home:'Germany',     homeFlag:'🇩🇪', away:'Curaçao',              awayFlag:'🇨🇼', date:'2026-06-14', timeET:'3:00 PM ET',  stadium:'Lincoln Financial Field', city:'Philadelphia'       },
+{ home:'South Africa', homeFlag:'🇿🇦', away:'Canada',               awayFlag:'🇨🇦', date:'2026-06-28', timeET:'23:00', stadium:'SoFi Stadium',          city:'Los Angeles'         },
+  { home:'Brazil',       homeFlag:'🇧🇷', away:'Japan',                awayFlag:'🇯🇵', date:'2026-06-29', timeET:'21:00', stadium:'NRG Stadium',           city:'Houston'             },
+  { home:'Germany',      homeFlag:'🇩🇪', away:'Paraguay',             awayFlag:'🇵🇾', date:'2026-06-30', timeET:'00:30', stadium:'Gillette Stadium',      city:'Boston'              },
+  { home:'Netherlands',  homeFlag:'🇳🇱', away:'Morocco',              awayFlag:'🇲🇦', date:'2026-06-30', timeET:'05:00', stadium:'Estadio BBVA',          city:'Monterrey'           },
+  { home:'Ivory Coast',  homeFlag:'🇨🇮', away:'Norway',               awayFlag:'🇳🇴', date:'2026-06-30', timeET:'21:00', stadium:'AT&T Stadium',          city:'Dallas'              },
+  { home:'France',       homeFlag:'🇫🇷', away:'Sweden',               awayFlag:'🇸🇪', date:'2026-07-01', timeET:'01:00', stadium:'MetLife Stadium',       city:'New York/New Jersey' },
+  { home:'Mexico',       homeFlag:'🇲🇽', away:'Ecuador',              awayFlag:'🇪🇨', date:'2026-07-01', timeET:'05:00', stadium:'Estadio Azteca',        city:'Mexico City'         },
+  { home:'England',      homeFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', away:'D.R. Congo',   awayFlag:'🇨🇩', date:'2026-07-01', timeET:'20:00', stadium:'Mercedes-Benz Stadium', city:'Atlanta'             },
+  { home:'Belgium',      homeFlag:'🇧🇪', away:'Senegal',              awayFlag:'🇸🇳', date:'2026-07-02', timeET:'00:00', stadium:'Lumen Field',           city:'Seattle'             },
+  { home:'USA',          homeFlag:'🇺🇸', away:'Bosnia & Herzegovina', awayFlag:'🇧🇦', date:'2026-07-02', timeET:'04:00', stadium:"Levi's Stadium",        city:'San Francisco'       },
+  { home:'Spain',        homeFlag:'🇪🇸', away:'Austria',              awayFlag:'🇦🇹', date:'2026-07-02', timeET:'23:00', stadium:'SoFi Stadium',          city:'Los Angeles'         },
+  { home:'Portugal',     homeFlag:'🇵🇹', away:'Croatia',              awayFlag:'🇭🇷', date:'2026-07-03', timeET:'03:00', stadium:'BMO Field',             city:'Toronto'             },
+  { home:'Switzerland',  homeFlag:'🇨🇭', away:'Algeria',              awayFlag:'🇩🇿', date:'2026-07-03', timeET:'07:00', stadium:'BC Place',              city:'Vancouver'           },
+  { home:'Australia',    homeFlag:'🇦🇺', away:'Egypt',                awayFlag:'🇪🇬', date:'2026-07-03', timeET:'22:00', stadium:'AT&T Stadium',          city:'Dallas'              },
+  { home:'Argentina',    homeFlag:'🇦🇷', away:'Cape Verde',           awayFlag:'🇨🇻', date:'2026-07-04', timeET:'02:00', stadium:'Hard Rock Stadium',     city:'Miami'               },
+  { home:'Colombia',     homeFlag:'🇨🇴', away:'Ghana',                awayFlag:'🇬🇭', date:'2026-07-04', timeET:'05:30', stadium:'Arrowhead Stadium',     city:'Kansas City'         },
 ];
 
 function getNextMatch(): NextMatch | null {
