@@ -621,7 +621,13 @@ function buildFallbackStandings(): FDStandingGroup[] {
 const matchIdMap = new Map<number, string>(); // numeric hash → original string matchId
 
 export function getStringMatchId(numericId: number): string | null {
-  return matchIdMap.get(numericId) ?? null;
+  if (matchIdMap.has(numericId)) return matchIdMap.get(numericId)!;
+  try {
+    const stored = JSON.parse(localStorage.getItem('wc_match_id_map') ?? '{}');
+    const strId = stored[numericId] ?? null;
+    if (strId) matchIdMap.set(numericId, strId);
+    return strId;
+  } catch { return null; }
 }
 
 // ── Draw + standings cross-reference ─────────────────────────────────────────
@@ -712,7 +718,15 @@ function parseDrawMatches(drawData: unknown, standingsData: unknown): FDMatch[] 
 
     // Store string matchId in map for later detail fetches
     const strId = typeof raw.matchId === 'string' ? raw.matchId : null;
-    if (strId) matchIdMap.set(match.id, strId);
+    if (strId) {
+      matchIdMap.set(match.id, strId);
+      // persist to localStorage
+      try {
+        const stored = JSON.parse(localStorage.getItem('wc_match_id_map') ?? '{}');
+        stored[match.id] = strId;
+        localStorage.setItem('wc_match_id_map', JSON.stringify(stored));
+      } catch {}
+    }
 
 
     console.log(`[WC API] MATCH STATUS: ${raw.home ?? ''} vs ${raw.away ?? ''} → raw.status=${JSON.stringify(raw.status)} → mapped=${match.status} score=${match.score.fullTime.home}:${match.score.fullTime.away}`);
