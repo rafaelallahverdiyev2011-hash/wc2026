@@ -348,7 +348,10 @@ export default function KnockoutTab({ liveMatches }: Props) {
         score: { winner: null, duration: 'REGULAR' as const, fullTime: { home: null, away: null }, halfTime: { home: null, away: null } },
         goals: [],
       }));
-      const apiKnockoutNums = new Set(data.filter((m: FDMatch) => m.stage?.toLowerCase().includes('32') || m.stage?.toLowerCase().includes('16') || m.stage?.toLowerCase().includes('quarter') || m.stage?.toLowerCase().includes('semi') || m.stage?.toLowerCase().includes('final')).map((m: FDMatch) => m.id));
+      const apiKnockoutNums = new Set(data.filter((m: FDMatch) => {
+        const s = typeof m.stage === 'string' ? m.stage.toLowerCase() : '';
+        return s.includes('32') || s.includes('16') || s.includes('quarter') || s.includes('semi') || s.includes('final');
+      }).map((m: FDMatch) => m.id));
       const merged = [...data, ...staticKnockout.filter((s: FDMatch) => !apiKnockoutNums.has(s.id))];
       setAllMatches(merged);
       setError(null);
