@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { KNOCKOUT_FIXTURES } from './ScheduleTab';
 import {
   fetchAllMatches,
   FDMatch,

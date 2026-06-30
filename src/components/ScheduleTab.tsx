@@ -75,7 +75,7 @@ function calcWinProbs(home: string, away: string): { h: number; d: number; a: nu
   return { h, d, a };
 }
 
-const GROUP_FIXTURES: StaticMatch[] = [
+export const GROUP_FIXTURES: StaticMatch[] = [
   { matchNum:1,  group:'A', home:'Mexico',      homeFlag:'🇲🇽', away:'South Africa', awayFlag:'🇿🇦', date:'2026-06-11', timeET:'23:00',  stadium:'Estadio Azteca',          city:'Mexico City',        stage:'Group Stage' },
   { matchNum:2,  group:'A', home:'South Korea', homeFlag:'🇰🇷', away:'Czechia',      awayFlag:'🇨🇿', date:'2026-06-12', timeET:'06:00',  stadium:'Estadio Akron',           city:'Guadalajara',        stage:'Group Stage' },
   { matchNum:3,  group:'A', home:'Mexico',      homeFlag:'🇲🇽', away:'South Korea',  awayFlag:'🇰🇷', date:'2026-06-19', timeET:'05:00',  stadium:'Estadio Akron',           city:'Guadalajara',        stage:'Group Stage' },
@@ -164,7 +164,7 @@ const R16_DATES = ['2026-07-04','2026-07-04','2026-07-05','2026-07-05','2026-07-
 const QF_DATES  = ['2026-07-09','2026-07-09','2026-07-10','2026-07-11'];
 const SF_DATES  = ['2026-07-14','2026-07-15'];
 
-const KNOCKOUT_FIXTURES: StaticMatch[] = [
+export const KNOCKOUT_FIXTURES: StaticMatch[] = [
   { matchNum:73,  group:'', home:'South Africa', homeFlag:'🇿🇦', away:'Canada', awayFlag:'🇨🇦', date:'2026-06-28', timeET:'23:00', stadium:'SoFi Stadium',            city:'Los Angeles',             stage:'Round of 32' },
   { matchNum:74,  group:'', home:'Brazil', homeFlag:'🇧🇷', away:'Japan', awayFlag:'🇯🇵', date:'2026-06-29', timeET:'21:00', stadium:'NRG Stadium',            city:'Houston',             stage:'Round of 32' },
   { matchNum:75,  group:'', home:'Germany', homeFlag:'🇩🇪', away:'Paraguay', awayFlag:'🇵🇾', date:'2026-06-30', timeET:'00:30', stadium:'Gillette Stadium',            city:'Boston',             stage:'Round of 32' },
