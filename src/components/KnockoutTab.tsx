@@ -335,7 +335,22 @@ export default function KnockoutTab({ liveMatches }: Props) {
   const load = useCallback(async () => {
     try {
       const data = await fetchAllMatches();
-      setAllMatches(data);
+      // Merge API data with static knockout fixtures
+      const staticKnockout: FDMatch[] = KNOCKOUT_FIXTURES.filter((f: any) => f.home !== 'TBD' && f.away !== 'TBD').map((f: any) => ({
+        id: f.matchNum,
+        homeTeam: { id: 0, name: f.home, shortName: f.home, tla: f.home.substring(0,3).toUpperCase(), crest: '' },
+        awayTeam: { id: 0, name: f.away, shortName: f.away, tla: f.away.substring(0,3).toUpperCase(), crest: '' },
+        status: 'SCHEDULED' as const,
+        stage: f.stage,
+        matchday: null,
+        utcDate: f.date + 'T00:00:00Z',
+        minute: null,
+        score: { winner: null, duration: 'REGULAR' as const, fullTime: { home: null, away: null }, halfTime: { home: null, away: null } },
+        goals: [],
+      }));
+      const apiKnockoutNums = new Set(data.filter((m: FDMatch) => m.stage?.toLowerCase().includes('32') || m.stage?.toLowerCase().includes('16') || m.stage?.toLowerCase().includes('quarter') || m.stage?.toLowerCase().includes('semi') || m.stage?.toLowerCase().includes('final')).map((m: FDMatch) => m.id));
+      const merged = [...data, ...staticKnockout.filter((s: FDMatch) => !apiKnockoutNums.has(s.id))];
+      setAllMatches(merged);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load');
