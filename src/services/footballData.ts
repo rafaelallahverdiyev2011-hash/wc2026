@@ -753,7 +753,9 @@ export async function fetchAllMatches(): Promise<FDMatch[]> {
       apiFetch<unknown>('/wc/draw?stage=knockout').catch(() => null),
     ]);
     const groupMatches = parseDrawMatches(drawData, standingsData);
+    console.log('[WC API] KNOCKOUT RAW:', JSON.stringify(knockoutData, null, 2));
     const apiKnockout = knockoutData ? parseDrawMatches(knockoutData, {}) : [];
+    console.log('[WC API] KNOCKOUT PARSED:', apiKnockout.length, 'matches');
     const matches = [...groupMatches, ...apiKnockout];
     lsSet('wc_draw_matches', matches);
     return matches;
