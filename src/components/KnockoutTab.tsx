@@ -353,6 +353,8 @@ export default function KnockoutTab({ liveMatches }: Props) {
         return s.includes('32') || s.includes('16') || s.includes('quarter') || s.includes('semi') || s.includes('final');
       }).map((m: FDMatch) => m.id));
       const merged = [...data, ...staticKnockout.filter((s: FDMatch) => !apiKnockoutNums.has(s.id))];
+      console.log('[KNOCKOUT] merged total:', merged.length);
+      console.log('[KNOCKOUT] r32 matches:', merged.filter((m: FDMatch) => normaliseStage(m.stage) === 'Round of 32').map((m: FDMatch) => m.homeTeam.name + ' vs ' + m.awayTeam.name));
       setAllMatches(merged);
       setError(null);
     } catch (err) {
