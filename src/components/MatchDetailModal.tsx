@@ -649,7 +649,7 @@ export default function MatchDetailModal({ matchId, staticInfo, apiMatch: initia
           {tab === 'overview' && (
             <OverviewTab info={staticInfo} match={match} homeFlag={homeFlag} awayFlag={awayFlag} />
           )}
-          {tab === 'stats' && matchId ? (
+          {tab === 'stats' && (matchId || staticInfo) ? (
             <StatsTab
               matchId={matchId}
               isFinished={finished}
