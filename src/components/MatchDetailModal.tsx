@@ -9,6 +9,7 @@ import {
   fetchMatchDetail,
   fetchMatchStats,
   fetchMatchLineups,
+  HARDCODED_LINEUPS,
   fetchMatchCommentary,
   getFlag,
   isLiveStatus,
@@ -375,11 +376,20 @@ function LineupsTab({ matchId, info, match }: {
 
   useEffect(() => {
     setLoading(true);
+    // Check hardcoded lineups first (for R32 matches not in API)
+    const homeName = match?.homeTeam?.name ?? info?.home ?? '';
+    const awayName = match?.awayTeam?.name ?? info?.away ?? '';
+    const hcKey = `${homeName}_${awayName}`;
+    if (HARDCODED_LINEUPS[hcKey]) {
+      setLineup(HARDCODED_LINEUPS[hcKey]);
+      setLoading(false);
+      return;
+    }
     fetchMatchLineups(matchId).then((l) => {
       setLineup(l);
       setLoading(false);
     });
-  }, [matchId]);
+  }, [matchId, match, info]);
 
   if (loading) return <Spinner />;
   if (!lineup || (lineup.homeStartXI.length === 0 && lineup.awayStartXI.length === 0)) {
