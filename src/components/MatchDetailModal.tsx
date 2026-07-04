@@ -652,8 +652,8 @@ export default function MatchDetailModal({ matchId, staticInfo, apiMatch: initia
           ) : tab === 'stats' && (
             <EmptyState message={finished ? 'Stats not available' : 'Stats available after kick-off'} />
           )}
-          {tab === 'lineups' && matchId ? (
-            <LineupsTab matchId={matchId} info={staticInfo} match={match} />
+          {tab === 'lineups' && (matchId || staticInfo) ? (
+            <LineupsTab matchId={matchId ?? 0} info={staticInfo} match={match} />
           ) : tab === 'lineups' && (
             <EmptyState message="Lineups not yet available" />
           )}
