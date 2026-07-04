@@ -380,6 +380,7 @@ function LineupsTab({ matchId, info, match }: {
     const homeName = match?.homeTeam?.name ?? info?.home ?? '';
     const awayName = match?.awayTeam?.name ?? info?.away ?? '';
     const hcKey = `${homeName}_${awayName}`;
+    console.log('[LINEUP] hcKey:', hcKey, 'found:', !!HARDCODED_LINEUPS[hcKey]);
     if (HARDCODED_LINEUPS[hcKey]) {
       setLineup(HARDCODED_LINEUPS[hcKey]);
       setLoading(false);
