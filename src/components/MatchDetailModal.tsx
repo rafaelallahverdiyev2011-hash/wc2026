@@ -10,6 +10,7 @@ import {
   fetchMatchStats,
   fetchMatchLineups,
   HARDCODED_LINEUPS,
+  HARDCODED_STATS,
   fetchMatchCommentary,
   getFlag,
   isLiveStatus,
@@ -248,10 +249,18 @@ function StatsTab({ matchId, isFinished, match, info, homeFlag, awayFlag }: {
 
   useEffect(() => {
     setLoading(true);
-    fetchMatchStats(matchId).then((s) => {
+    const homeName = match?.homeTeam?.name ?? info?.home ?? '';
+    const awayName = match?.awayTeam?.name ?? info?.away ?? '';
+    const hcStatsKey = `${homeName}_${awayName}`;
+    if (HARDCODED_STATS[hcStatsKey]) {
+      setStats(HARDCODED_STATS[hcStatsKey]);
+      setLoading(false);
+    } else {
+        fetchMatchStats(matchId).then((s) => {
       setStats(s);
       setLoading(false);
     });
+    }
   }, [matchId]);
 
   const homeScore = match?.score.fullTime.home ?? null;
