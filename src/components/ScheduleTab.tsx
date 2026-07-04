@@ -182,7 +182,7 @@ export const KNOCKOUT_FIXTURES: StaticMatch[] = [
   { matchNum:86,  group:'', home:'Australia', homeFlag:'🇦🇺', away:'Egypt', awayFlag:'🇪🇬', date:'2026-07-03', timeET:'22:00', stadium:'AT&T Stadium',            city:'Dallas',             stage:'Round of 32' },
   { matchNum:87,  group:'', home:'Argentina', homeFlag:'🇦🇷', away:'Cape Verde', awayFlag:'🇨🇻', date:'2026-07-04', timeET:'02:00', stadium:'Hard Rock Stadium',            city:'Miami',             stage:'Round of 32' },
   { matchNum:88,  group:'', home:'Colombia', homeFlag:'🇨🇴', away:'Ghana', awayFlag:'🇬🇭', date:'2026-07-04', timeET:'05:30', stadium:'Arrowhead Stadium',            city:'Kansas City',             stage:'Round of 32' },
-  { matchNum:89,  group:'', home:'Canada', homeFlag:'🇨🇦', away:'Paraguay', awayFlag:'🇵🇾', date:'2026-07-04', timeET:'21:00', stadium:'NRG Stadium',             city:'Houston',             stage:'Round of 16' },
+  { matchNum:89,  group:'', home:'Canada', homeFlag:'🇨🇦', away:'Morocco', awayFlag:'🇲🇦', date:'2026-07-04', timeET:'21:00', stadium:'NRG Stadium',             city:'Houston',             stage:'Round of 16' },
   { matchNum:90,  group:'', home:'Paraguay', homeFlag:'🇵🇾', away:'France', awayFlag:'🇫🇷', date:'2026-07-05', timeET:'01:00', stadium:'Lincoln Financial Field', city:'Philadelphia',        stage:'Round of 16' },
   { matchNum:91,  group:'', home:'Brazil', homeFlag:'🇧🇷', away:'Norway', awayFlag:'🇳🇴', date:'2026-07-06', timeET:'00:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Round of 16' },
   { matchNum:92,  group:'', home:'Mexico', homeFlag:'🇲🇽', away:'England', awayFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', date:'2026-07-06', timeET:'04:00', stadium:'Estadio Azteca',          city:'Mexico City',         stage:'Round of 16' },
