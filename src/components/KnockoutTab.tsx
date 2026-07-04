@@ -3,6 +3,7 @@ import { KNOCKOUT_FIXTURES } from './ScheduleTab';
 import {
   fetchAllMatches,
   FDMatch,
+  HARDCODED_RESULTS,
   isLiveStatus,
   isFinishedStatus,
   normaliseStage,
@@ -345,7 +346,15 @@ export default function KnockoutTab({ liveMatches }: Props) {
         matchday: null,
         utcDate: f.date + 'T00:00:00Z',
         minute: null,
-        score: { winner: null, duration: 'REGULAR' as const, fullTime: { home: null, away: null }, halfTime: { home: null, away: null } },
+        score: (() => {
+          const hcKey = `${f.home}_${f.away}`;
+          const hcAlt = `${f.home}_${f.away}`.replace('D.R. Congo', 'DR Congo');
+          const hc = HARDCODED_RESULTS[hcKey] || HARDCODED_RESULTS[hcAlt] || null;
+          const hs = hc ? hc.home : null;
+          const as_ = hc ? hc.away : null;
+          const winner = hs !== null && as_ !== null ? (hs > as_ ? 'HOME_TEAM' : as_ > hs ? 'AWAY_TEAM' : 'DRAW') : null;
+          return { winner, duration: 'REGULAR' as const, fullTime: { home: hs, away: as_ }, halfTime: { home: null, away: null } };
+        })(),
         goals: [],
       }));
       const apiKnockoutNums = new Set(data.filter((m: FDMatch) => {
