@@ -341,7 +341,11 @@ export default function KnockoutTab({ liveMatches }: Props) {
         id: f.matchNum,
         homeTeam: { id: 0, name: f.home, shortName: f.home, tla: f.home.substring(0,3).toUpperCase(), crest: '' },
         awayTeam: { id: 0, name: f.away, shortName: f.away, tla: f.away.substring(0,3).toUpperCase(), crest: '' },
-        status: 'SCHEDULED' as const,
+        status: (() => {
+          const hcKey = `${f.home}_${f.away}`;
+          const hcAlt = `${f.home}_${f.away}`.replace('D.R. Congo', 'DR Congo');
+          return (HARDCODED_RESULTS[hcKey] || HARDCODED_RESULTS[hcAlt]) ? 'FINISHED' as const : 'SCHEDULED' as const;
+        })(),
         stage: f.stage,
         matchday: null,
         utcDate: f.date + 'T00:00:00Z',
