@@ -194,10 +194,10 @@ export const KNOCKOUT_FIXTURES: StaticMatch[] = [
   { matchNum:98,  group:'', home:'Spain', homeFlag:'🇪🇸', away:'Belgium', awayFlag:'🇧🇪', date:'2026-07-10', timeET:'23:00', stadium:'SoFi Stadium',            city:'Los Angeles',         stage:'Quarterfinals' },
   { matchNum:99,  group:'', home:'Norway', homeFlag:'🇳🇴', away:'England', awayFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', date:'2026-07-12', timeET:'01:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Quarterfinals' },
   { matchNum:100, group:'', home:'Argentina', homeFlag:'🇦🇷', away:'Switzerland', awayFlag:'🇨🇭', date:'2026-07-12', timeET:'05:00', stadium:'Arrowhead Stadium',       city:'Kansas City',         stage:'Quarterfinals' },
-  { matchNum:101, group:'', home:'Winner M97', homeFlag:'🏳', away:'Winner M98', awayFlag:'🏳', date:'2026-07-14', timeET:'23:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Semifinals' },
-  { matchNum:102, group:'', home:'Winner M99', homeFlag:'🏳', away:'Winner M100',awayFlag:'🏳', date:'2026-07-15', timeET:'23:00', stadium:'Mercedes-Benz Stadium',   city:'Atlanta',             stage:'Semifinals' },
-  { matchNum:103, group:'', home:'Loser M101', homeFlag:'🏳', away:'Loser M102', awayFlag:'🏳', date:'2026-07-19', timeET:'01:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Third Place' },
-  { matchNum:104, group:'', home:'WC Winner',  homeFlag:'🏳', away:'WC Runner-up',awayFlag:'🏳', date:'2026-07-19', timeET:'23:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Final' },
+  { matchNum:101, group:'', home:'France', homeFlag:'🇫🇷', away:'Spain', awayFlag:'🇪🇸', date:'2026-07-14', timeET:'23:00', stadium:'AT&T Stadium',            city:'Dallas',              stage:'Semifinals' },
+  { matchNum:102, group:'', home:'Argentina', homeFlag:'🇦🇷', away:'England', awayFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', date:'2026-07-15', timeET:'23:00', stadium:'Mercedes-Benz Stadium',   city:'Atlanta',             stage:'Semifinals' },
+  { matchNum:103, group:'', home:'France', homeFlag:'🇫🇷', away:'England', awayFlag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', date:'2026-07-19', timeET:'01:00', stadium:'Hard Rock Stadium',       city:'Miami',               stage:'Third Place' },
+  { matchNum:104, group:'', home:'Spain', homeFlag:'🇪🇸', away:'Argentina', awayFlag:'🇦🇷', date:'2026-07-19', timeET:'23:00', stadium:'MetLife Stadium',         city:'New York/New Jersey', stage:'Final' },
 ];
 
 
