@@ -36,6 +36,15 @@ export const HARDCODED_RESULTS: Record<string, { home: number; away: number }> =
   "Cape Verde_Argentina":             { home: 2, away: 3 },
   "Colombia_Ghana":                   { home: 1, away: 0 },
   "Ghana_Colombia":                   { home: 0, away: 1 },
+  // Quarterfinals
+  "Morocco_France":      { home: 0, away: 2 },
+  "France_Morocco":      { home: 2, away: 0 },
+  "Spain_Belgium":       { home: 2, away: 1 },
+  "Belgium_Spain":       { home: 1, away: 2 },
+  "Norway_England":      { home: 1, away: 2 },
+  "England_Norway":      { home: 2, away: 1 },
+  "Argentina_Switzerland": { home: 3, away: 1 },
+  "Switzerland_Argentina": { home: 1, away: 3 },
   // Round of 16
   "Canada_Morocco":            { home: 0, away: 3 },
   "Morocco_Canada":            { home: 3, away: 0 },
