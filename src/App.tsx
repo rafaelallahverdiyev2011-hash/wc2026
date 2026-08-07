@@ -6,6 +6,7 @@ import GameTab from './components/GameTab';
 import TeamsTab from './components/TeamsTab';
 import ScheduleTab from './components/ScheduleTab';
 import PredictTab from './components/PredictTab';
+import ChampionBanner from './components/ChampionBanner';
 import {
   fetchAllMatches,
   prefetchAll,
@@ -35,45 +36,6 @@ const POLL_INTERVALS: Record<PollMode, number | null> = {
   done:   null,    // stop — all finished
 };
 
-// ── Countdown ─────────────────────────────────────────────────────────────────
-
-const WC_START = new Date('2026-06-11T18:00:00Z');  // first match kick-off (2 PM ET Jun 11)
-const WC_FINAL = new Date('2026-07-19T22:00:00Z');  // Final 6:00 PM ET = 22:00 UTC
-
-type CountdownPhase = 'kickoff' | 'final';
-
-function useSmartCountdown() {
-  const getPhase = (): CountdownPhase => Date.now() >= WC_START.getTime() ? 'final' : 'kickoff';
-
-  const [phase, setPhase] = useState<CountdownPhase>(getPhase);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const calc = () => {
-      const now = Date.now();
-      const newPhase = now >= WC_START.getTime() ? 'final' : 'kickoff';
-      setPhase(newPhase);
-      const target = newPhase === 'kickoff' ? WC_START : WC_FINAL;
-      const diff = target.getTime() - now;
-      if (diff <= 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-      setTimeLeft({
-        days:    Math.floor(diff / 86400000),
-        hours:   Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-      });
-    };
-    calc();
-    const id = setInterval(calc, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  return { timeLeft, phase };
-}
-
 const TABS = [
   { id: 'teams',    label: 'TEAMS'    },
   { id: 'groups',   label: 'GROUPS'   },
@@ -93,7 +55,6 @@ export default function App() {
   const [pollMode, setPollMode] = useState<PollMode>('idle');
   const retryTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollTimerRef  = useRef<ReturnType<typeof setInterval> | null>(null);
-  const { timeLeft: countdown, phase: countdownPhase } = useSmartCountdown();
 
   const loadLiveMatches = useCallback(async () => {
     setIsLoading(true);
@@ -157,14 +118,6 @@ export default function App() {
   }, []);
 
   const liveCount = liveMatches.filter((m) => isLiveStatus(m.status)).length;
-
-  const countdownBlocks = [
-    { value: countdown.days,    label: 'DAYS'    },
-    { value: countdown.hours,   label: 'HOURS'   },
-    { value: countdown.minutes, label: 'MINUTES' },
-    { value: countdown.seconds, label: 'SECONDS' },
-  ];
-  const borderColors = ['#E3000B', '#0057A8', '#6B2D8B', '#00A850'];
 
   return (
     <div className="min-h-screen bg-wc-black font-inter">
@@ -360,48 +313,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="relative pb-10 md:pb-14">
-          <p
-            className="font-inter text-white/50 tracking-[0.4em] text-xs text-center mb-5 uppercase"
-            style={{ fontWeight: 600 }}
-          >
-            {countdownPhase === 'final'
-              ? 'COUNTDOWN TO THE FINAL 🏆 · MetLife Stadium, New Jersey'
-              : 'Countdown to Kickoff'}
-          </p>
-          <div className="grid grid-cols-4 gap-3 md:gap-5 max-w-xl mx-auto px-4">
-            {countdownBlocks.map(({ value, label }, i) => (
-              <div key={label} className="text-center">
-                <div
-                  style={{
-                    background: '#ffffff',
-                    borderBottom: `4px solid ${borderColors[i]}`,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
-                    padding: '14px 8px 12px',
-                  }}
-                >
-                  <span
-                    className="font-inter leading-none block text-wc-black"
-                    style={{ fontSize: 'clamp(32px, 7vw, 48px)', fontWeight: 900 }}
-                  >
-                    {String(value).padStart(2, '0')}
-                  </span>
-                </div>
-                <p
-                  className="font-inter text-white/60 tracking-[0.3em] text-xs mt-2 uppercase"
-                  style={{ fontWeight: 600 }}
-                >
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-          {countdownPhase === 'final' && (
-            <p className="font-inter text-white/30 text-xs text-center mt-5 tracking-widest uppercase" style={{ fontWeight: 600 }}>
-              July 19, 2026 · 6:00 PM ET
-            </p>
-          )}
-        </div>
+        <ChampionBanner />
       </section>
 
       {/* ── NEON SEPARATOR ─────────────────────────────────── */}
